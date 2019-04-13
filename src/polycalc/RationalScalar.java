@@ -88,8 +88,7 @@ public class RationalScalar extends ScalarBase {
     @Override
     public boolean equals(Scalar s) {
         RationalScalar other = (RationalScalar)s;
-        return this.getA() == other.getA() &
-               this.getB() == other.getB();
+        return this.getA() * other.getB() == this.getB() * other.getA();
     }
 
     @Override
