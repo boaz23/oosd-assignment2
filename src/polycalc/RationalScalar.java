@@ -81,7 +81,17 @@ public class RationalScalar extends ScalarBase {
 
     @Override
     public String toString() {
-        return this.getA() + "/" + this.getB();
+        String s = "";
+
+        int b = this.getB();
+        if (b == 1) {
+            s = "" + a;
+        }
+        else {
+            s = this.getA() + "/" + this.getB();
+        }
+
+        return s;
     }
 
     @Override

@@ -4,7 +4,7 @@ abstract class ScalarBase implements Scalar {
     @Override
     public Scalar pow(int exponent) {
         if (exponent < 0) {
-            throw new UnsupportedOperationException();
+            throw new IllegalArgumentException("exponent must be a non-negative number.");
         }
 
         return powCore(exponent);
@@ -19,11 +19,11 @@ abstract class ScalarBase implements Scalar {
             result = this.clone();
         }
         else if (exponent % 2 == 0) {
-            Scalar tmp = this.pow(exponent / 2);
+            Scalar tmp = this.powCore(exponent / 2);
             result = tmp.mul(tmp);
         }
         else {
-            result = this.mul(this.pow(exponent - 1));
+            result = this.mul(this.powCore(exponent - 1));
         }
 
         return result;
