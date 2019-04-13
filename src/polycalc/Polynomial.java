@@ -22,21 +22,17 @@ public class Polynomial {
             throw new IllegalArgumentException("poly is null.");
         }
 
-        Map<Integer, Pair<Integer, PolyTerm>> resultPolyTermsMap = new HashMap<>();
-        List<PolyTerm> resultPolyTerms = new ArrayList<>();
-        addTerms(this.terms, resultPolyTerms, resultPolyTermsMap);
-        addTerms(poly.terms, resultPolyTerms, resultPolyTermsMap);
+        PolynomialBuilder builder = new PolynomialBuilder();
+        this.addTerms(builder);
+        poly.addTerms(builder);
 
-        return new Polynomial(resultPolyTerms);
+        return builder.build();
     }
 
-    private static void addTerms(List<PolyTerm> polyTerms,
-                                 List<PolyTerm> resultPolyTerms,
-                                 Map<Integer, Pair<Integer, PolyTerm>> resultPolyTermsMap) {
-        for (int i = 0; i < polyTerms.size(); i++) {
-            PolyTerm polyTerm = polyTerms.get(i);
-            addPolyTerm(resultPolyTerms, resultPolyTermsMap, polyTerm);
-
+    private void addTerms(PolynomialBuilder builder) {
+        for (int i = 0; i < this.terms.size(); i++) {
+            PolyTerm polyTerm = this.terms.get(i);
+            builder.addPolyTerm(polyTerm);
         }
     }
 
@@ -45,8 +41,7 @@ public class Polynomial {
             throw new IllegalArgumentException("poly is null.");
         }
 
-        Map<Integer, Pair<Integer, PolyTerm>> resultPolyTermsMap = new HashMap<>();
-        List<PolyTerm> resultPolyTerms = new ArrayList<>();
+        PolynomialBuilder builder = new PolynomialBuilder();
         for (int i = 0; i < this.terms.size(); i++) {
             PolyTerm thisPolyTerm = this.terms.get(i);
 
@@ -54,28 +49,11 @@ public class Polynomial {
                 PolyTerm otherPolyTerm = poly.terms.get(j);
 
                 PolyTerm resultPolyTerm = thisPolyTerm.mul(otherPolyTerm);
-                addPolyTerm(resultPolyTerms, resultPolyTermsMap, resultPolyTerm);
+                builder.addPolyTerm(resultPolyTerm);
             }
         }
 
-        return new Polynomial(resultPolyTerms);
-    }
-
-    private static void addPolyTerm(List<PolyTerm> resultPolyTerms, Map<Integer, Pair<Integer, PolyTerm>> resultPolyTermsMap, PolyTerm polyTerm) {
-        // we haven't seen this exponent
-        if (!resultPolyTermsMap.containsKey(polyTerm.getExponent())) {
-            int index = resultPolyTerms.size();
-            resultPolyTerms.add(polyTerm);
-            resultPolyTermsMap.put(polyTerm.getExponent(), new Pair<>(index, polyTerm));
-        }
-        else {
-            Pair<Integer, PolyTerm> polyTermPair = resultPolyTermsMap.get(polyTerm.getExponent());
-            PolyTerm otherPolyTerm = polyTermPair.getValue();
-            PolyTerm resultPolyTerm = polyTerm.add(otherPolyTerm);
-
-            resultPolyTerms.set(polyTermPair.getKey(), resultPolyTerm);
-            resultPolyTermsMap.put(polyTerm.getExponent(), new Pair<>(polyTermPair.getKey(), resultPolyTerm));
-        }
+        return builder.build();
     }
 
     public Scalar evaluate(Scalar scalar) {
