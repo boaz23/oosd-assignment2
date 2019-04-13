@@ -21,20 +21,23 @@ public class PolynomialBuilder {
     }
 
     public void addPolyTerm(PolyTerm polyTerm) {
-        if (!this.polyTermsMap.containsKey(polyTerm.getExponent())) {
+        int exponent = polyTerm.getExponent();
+
+        if (!this.polyTermsMap.containsKey(exponent)) {
             // we haven't seen this exponent
             int index = this.polyTerms.size();
             this.polyTerms.add(polyTerm);
-            this.polyTermsMap.put(polyTerm.getExponent(), new Pair<>(index, polyTerm));
+            this.polyTermsMap.put(exponent, new Pair<>(index, polyTerm));
         }
         else {
             // we have seen this exponent
-            Pair<Integer, PolyTerm> polyTermPair = this.polyTermsMap.get(polyTerm.getExponent());
+            Pair<Integer, PolyTerm> polyTermPair = this.polyTermsMap.get(exponent);
+            int listIndex = polyTermPair.getKey();
             PolyTerm otherPolyTerm = polyTermPair.getValue();
-            PolyTerm resultPolyTerm = polyTerm.add(otherPolyTerm);
 
-            this.polyTerms.set(polyTermPair.getKey(), resultPolyTerm);
-            this.polyTermsMap.put(polyTerm.getExponent(), new Pair<>(polyTermPair.getKey(), resultPolyTerm));
+            PolyTerm resultPolyTerm = polyTerm.add(otherPolyTerm);
+            this.polyTerms.set(listIndex, resultPolyTerm);
+            this.polyTermsMap.put(exponent, new Pair<>(listIndex, resultPolyTerm));
         }
     }
 
