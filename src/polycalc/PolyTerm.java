@@ -1,7 +1,5 @@
 package polycalc;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class PolyTerm {
     private Scalar coefficient;
     private int exponent;
@@ -20,6 +18,10 @@ public class PolyTerm {
     }
 
     public void setCoefficient(Scalar coefficient) {
+        if (coefficient == null) {
+            throw new IllegalArgumentException("coefficient is null.");
+        }
+
         this.coefficient = coefficient;
     }
 

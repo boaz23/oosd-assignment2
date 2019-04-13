@@ -1,9 +1,10 @@
 package polycalc;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-public class RealScalar implements Scalar {
+public class RealScalar extends ScalarBase {
     private double value;
+
+    public static final Scalar Zero = new RealScalar(0);
+    public static final Scalar One = new RealScalar(1);
 
     public RealScalar(double value) {
         this.value = value;
@@ -18,32 +19,40 @@ public class RealScalar implements Scalar {
     }
 
     @Override
+    protected Scalar clone() {
+        return new RealScalar(this.getValue());
+    }
+
+    @Override
     public Scalar add(Scalar s) {
-        throw new NotImplementedException();
+        RealScalar other = (RealScalar)s;
+        return new RealScalar(this.getValue() + other.getValue());
     }
 
     @Override
     public Scalar mul(Scalar s) {
-        throw new NotImplementedException();
+        RealScalar other = (RealScalar)s;
+        return new RealScalar(this.getValue() * other.getValue());
     }
 
     @Override
     public Scalar mul(int n) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public Scalar pow(int exponent) {
-        throw new NotImplementedException();
+        return new RealScalar(this.getValue() * n);
     }
 
     @Override
     public Scalar neg() {
-        throw new NotImplementedException();
+        return new RealScalar(-this.getValue());
     }
 
     @Override
     public boolean equals(Scalar s) {
-        throw new NotImplementedException();
+        RealScalar other = (RealScalar)s;
+        return this.getValue() == other.getValue();
+    }
+
+    @Override
+    Scalar getOne() {
+        return One;
     }
 }

@@ -1,10 +1,11 @@
 package polycalc;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-public class RationalScalar implements Scalar {
+public class RationalScalar extends ScalarBase {
     private int a;
     private int b;
+
+    public static final Scalar Zero = new RationalScalar(0, 1);
+    public static final Scalar One = new RationalScalar(1, 1);
 
     public RationalScalar(int a, int b) {
         if (b == 0) {
@@ -32,32 +33,51 @@ public class RationalScalar implements Scalar {
     }
 
     @Override
+    public Scalar clone() {
+        return new RationalScalar(this.getA(), this.getB());
+    }
+
+    @Override
     public Scalar add(Scalar s) {
-        throw new NotImplementedException();
+        if (s == null) {
+            throw new IllegalArgumentException("s is null.");
+        }
+
+        RationalScalar other = (RationalScalar)s;
+        return new RationalScalar((this.getA() * other.getB()) + (this.getB() * other.getA()),
+                                  this.getB() * other.getB());
     }
 
     @Override
     public Scalar mul(Scalar s) {
-        throw new NotImplementedException();
+        if (s == null) {
+            throw new IllegalArgumentException("s is null.");
+        }
+
+        RationalScalar other = (RationalScalar)s;
+        return new RationalScalar(this.getA() * other.getA(),
+                                  this.getB() * other.getB());
     }
 
     @Override
     public Scalar mul(int n) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public Scalar pow(int exponent) {
-        throw new NotImplementedException();
+        return this.mul(new RationalScalar(n, 1));
     }
 
     @Override
     public Scalar neg() {
-        throw new NotImplementedException();
+        return new RationalScalar(-this.getA(), this.getB());
     }
 
     @Override
     public boolean equals(Scalar s) {
-        throw new NotImplementedException();
+        RationalScalar other = (RationalScalar)s;
+        return this.getA() == other.getA() &
+               this.getB() == other.getB();
+    }
+
+    @Override
+    Scalar getOne() {
+        return One;
     }
 }
