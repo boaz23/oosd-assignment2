@@ -8,7 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 public class PolynomialBuilder {
+    // The list of all terms, used for the instantiation
     private List<PolyTerm> polyTerms;
+
+    // store the terms in a hashtable
+    // the key is the exponent
+    // for each term, attach it's index in the list (polyTerms)
+    // for fast update of the same exponent
     private Map<Integer, Pair<Integer, PolyTerm>> polyTermsMap;
 
     public PolynomialBuilder() {

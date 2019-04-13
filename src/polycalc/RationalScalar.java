@@ -16,9 +16,8 @@ public class RationalScalar extends ScalarBase {
             b = 1;
         }
 
-        // if they're both negative or the denominator is negative,
-        // change both's sign
-        if ((a < 0 & b < 0) | (a > 0 & b < 0)) {
+        // if denominator is negative, change both's sign
+        if (b < 0) {
             a *= -1;
             b *= -1;
         }

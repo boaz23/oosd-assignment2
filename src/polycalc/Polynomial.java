@@ -116,17 +116,21 @@ public class Polynomial {
         Map<Integer, PolyTerm> polyTermMap = new HashMap<>();
         for (int i = 0; i < this.terms.size(); i++) {
             PolyTerm polyTerm = this.terms.get(i);
-            polyTermMap.put(polyTerm.getExponent(), polyTerm);
+            int exponent = polyTerm.getExponent();
+
+            polyTermMap.put(exponent, polyTerm);
         }
 
         for (int i = 0; i < poly.terms.size(); i++) {
             PolyTerm polyTerm = poly.terms.get(i);
-            if (!polyTermMap.containsKey(polyTerm.getExponent())) {
+            int exponent = polyTerm.getExponent();
+
+            if (!polyTermMap.containsKey(exponent)) {
                 result = false;
                 break;
             }
 
-            PolyTerm otherPolyTerm = polyTermMap.get(polyTerm.getExponent());
+            PolyTerm otherPolyTerm = polyTermMap.get(exponent);
             if (!polyTerm.getCoefficient().equals(otherPolyTerm.getCoefficient())) {
                 result = false;
                 break;
