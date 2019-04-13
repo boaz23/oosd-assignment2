@@ -1,5 +1,7 @@
 package polycalc;
 
+import java.text.DecimalFormat;
+
 public class RealScalar extends ScalarBase {
     private double value;
 
@@ -43,6 +45,12 @@ public class RealScalar extends ScalarBase {
     @Override
     public Scalar neg() {
         return new RealScalar(-this.getValue());
+    }
+
+    @Override
+    public String toString() {
+        DecimalFormat format = new DecimalFormat("#.###");
+        return format.format(this.getValue());
     }
 
     @Override

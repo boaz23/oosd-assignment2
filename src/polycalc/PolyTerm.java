@@ -8,6 +8,9 @@ public class PolyTerm {
         if (coefficient == null) {
             throw new IllegalArgumentException("coefficient is null.");
         }
+        if (exponent < 0) {
+            throw new IllegalArgumentException("exponent must be a non-negative number.");
+        }
 
         this.coefficient = coefficient;
         this.exponent = exponent;
@@ -83,5 +86,15 @@ public class PolyTerm {
 
         return this.getExponent() == polyTerm.getExponent() &
                this.getCoefficient().equals(polyTerm.getCoefficient());
+    }
+
+    @Override
+    public String toString() {
+        String s = this.getCoefficient().toString();
+        if (this.getExponent() > 0) {
+            s += "x^" + this.getExponent();
+        }
+
+        return s;
     }
 }

@@ -12,6 +12,17 @@ public class RationalScalar extends ScalarBase {
             throw new IllegalArgumentException("The denominator cannot be 0.");
         }
 
+        if (a == 0) {
+            b = 1;
+        }
+
+        // if they're both negative or the denominator is negative,
+        // change both's sign
+        if ((a < 0 & b < 0) | (a > 0 & b < 0)) {
+            a *= -1;
+            b *= -1;
+        }
+
         this.a = a;
         this.b = b;
     }
@@ -67,6 +78,11 @@ public class RationalScalar extends ScalarBase {
     @Override
     public Scalar neg() {
         return new RationalScalar(-this.getA(), this.getB());
+    }
+
+    @Override
+    public String toString() {
+        return this.getA() + "/" + this.getB();
     }
 
     @Override
