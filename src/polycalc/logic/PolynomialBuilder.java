@@ -1,6 +1,7 @@
 package polycalc.logic;
 
 import javafx.util.Pair;
+import polycalc.utils.ScalarUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,14 +30,17 @@ public class PolynomialBuilder {
     public void addPolyTerm(PolyTerm polyTerm) {
         int exponent = polyTerm.getExponent();
 
+        // check whether a poly term of this exponent has already been added.
+        // if so, add them together and update
         if (!this.polyTermsMap.containsKey(exponent)) {
-            // we haven't seen this exponent
-            int index = this.polyTerms.size();
-            this.polyTerms.add(polyTerm);
-            this.polyTermsMap.put(exponent, new Pair<>(index, polyTerm));
+            // poly term with a coefficient of zero are not allowed
+            if (!ScalarUtils.isZero(polyTerm.getCoefficient())) {
+                int index = this.polyTerms.size();
+                this.polyTerms.add(polyTerm);
+                this.polyTermsMap.put(exponent, new Pair<>(index, polyTerm));
+            }
         }
         else {
-            // we have seen this exponent
             Pair<Integer, PolyTerm> polyTermPair = this.polyTermsMap.get(exponent);
             int listIndex = polyTermPair.getKey();
             PolyTerm otherPolyTerm = polyTermPair.getValue();

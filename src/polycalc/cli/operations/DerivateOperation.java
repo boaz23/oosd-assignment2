@@ -14,13 +14,12 @@ public class DerivateOperation implements PolynomialOperation {
     }
 
     @Override
-    public void run(NumberField numberField) {
+    public void run(NumberField numberField, PolynomialParser parser) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please insert the polynomial");
         String inputPolynomial = scanner.nextLine();
 
-        PolynomialParser parser = new PolynomialParser(numberField);
         Polynomial polynomial = parser.parse(inputPolynomial);
 
         System.out.println("The derivative polynomial is:");

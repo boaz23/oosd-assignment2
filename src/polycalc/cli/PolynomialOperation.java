@@ -2,5 +2,5 @@ package polycalc.cli;
 
 public interface PolynomialOperation {
     boolean shouldExit();
-    void run(NumberField numberField);
+    void run(NumberField numberField, PolynomialParser parser);
 }

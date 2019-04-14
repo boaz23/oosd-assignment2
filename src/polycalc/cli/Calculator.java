@@ -54,8 +54,9 @@ public class Calculator {
             System.out.println("Rational (Q) or Real (R)");
             String fieldOption = scanner.nextLine();
             NumberField numberField = calculator.numberFields.get(fieldOption);
+            PolynomialParser parser = new PolynomialParser(numberField);
 
-            operation.run(numberField);
+            operation.run(numberField, parser);
         }
     }
 }

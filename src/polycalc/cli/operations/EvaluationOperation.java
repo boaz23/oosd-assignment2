@@ -15,7 +15,7 @@ public class EvaluationOperation implements PolynomialOperation {
     }
 
     @Override
-    public void run(NumberField numberField) {
+    public void run(NumberField numberField, PolynomialParser parser) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please insert the polynomial");
@@ -24,7 +24,6 @@ public class EvaluationOperation implements PolynomialOperation {
         System.out.println("Please insert the scalar");
         String inputScalar = scanner.nextLine();
 
-        PolynomialParser parser = new PolynomialParser(numberField);
         Polynomial polynomial = parser.parse(inputPolynomial);
         Scalar scalar = numberField.parseScalar(inputScalar);
 

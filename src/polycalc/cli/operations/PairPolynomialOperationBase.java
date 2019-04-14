@@ -14,7 +14,7 @@ public abstract class PairPolynomialOperationBase<TResult> implements Polynomial
     }
 
     @Override
-    public void run(NumberField numberField) {
+    public void run(NumberField numberField, PolynomialParser parser) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please insert the first polynomial");
@@ -23,7 +23,6 @@ public abstract class PairPolynomialOperationBase<TResult> implements Polynomial
         System.out.println("Please insert the second polynomial");
         String inputP2 = scanner.nextLine();
 
-        PolynomialParser parser = new PolynomialParser(numberField);
         Polynomial p1 = parser.parse(inputP1);
         Polynomial p2 = parser.parse(inputP2);
 
