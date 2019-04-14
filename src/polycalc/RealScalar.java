@@ -21,7 +21,7 @@ public class RealScalar extends ScalarBase {
     }
 
     @Override
-    protected Scalar clone() {
+    public Scalar clone() {
         return new RealScalar(this.getValue());
     }
 

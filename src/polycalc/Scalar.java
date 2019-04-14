@@ -8,6 +8,6 @@ public interface Scalar {
     Scalar neg();
 
     boolean equals(Scalar s);
-
     String toString();
+    Scalar clone();
 }

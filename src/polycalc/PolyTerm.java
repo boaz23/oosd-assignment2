@@ -5,15 +5,8 @@ public class PolyTerm {
     private int exponent;
 
     public PolyTerm(Scalar coefficient, int exponent) {
-        if (coefficient == null) {
-            throw new IllegalArgumentException("coefficient is null.");
-        }
-        if (exponent < 0) {
-            throw new IllegalArgumentException("exponent must be a non-negative number.");
-        }
-
-        this.coefficient = coefficient;
-        this.exponent = exponent;
+        this.setCoefficient(coefficient);
+        this.setExponent(exponent);
     }
 
     public Scalar getCoefficient() {
@@ -33,6 +26,10 @@ public class PolyTerm {
     }
 
     public void setExponent(int exponent) {
+        if (exponent < 0) {
+            throw new IllegalArgumentException("exponent must be a non-negative number.");
+        }
+
         this.exponent = exponent;
     }
 
@@ -76,7 +73,10 @@ public class PolyTerm {
 
     public PolyTerm derivate() {
         Scalar newCoefficient = this.getCoefficient().mul(this.getExponent());
-        return new PolyTerm(newCoefficient, this.getExponent() - 1);
+
+        // the exponent cannot go below zero
+        int newExponent = Math.max(this.getExponent() - 1, 0);
+        return new PolyTerm(newCoefficient, newExponent);
     }
 
     public boolean equals(PolyTerm polyTerm) {

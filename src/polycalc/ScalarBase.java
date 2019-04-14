@@ -29,6 +29,6 @@ abstract class ScalarBase implements Scalar {
         return result;
     }
 
-    protected abstract Scalar clone();
+    public abstract Scalar clone();
     abstract Scalar getOne();
 }
