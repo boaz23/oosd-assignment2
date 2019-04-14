@@ -97,4 +97,13 @@ public class PolyTerm {
 
         return s;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PolyTerm)) {
+            return false;
+        }
+
+        return this.equals((PolyTerm)obj);
+    }
 }

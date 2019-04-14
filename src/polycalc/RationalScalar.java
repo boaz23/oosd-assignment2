@@ -1,5 +1,7 @@
 package polycalc;
 
+import polycalc.utils.MathUtils;
+
 public class RationalScalar extends ScalarBase {
     private int a;
     private int b;
@@ -15,11 +17,16 @@ public class RationalScalar extends ScalarBase {
         if (a == 0) {
             b = 1;
         }
+        else {
+            // if denominator is negative, change both's sign
+            if (b < 0) {
+                a *= -1;
+                b *= -1;
+            }
 
-        // if denominator is negative, change both's sign
-        if (b < 0) {
-            a *= -1;
-            b *= -1;
+            int gcd = MathUtils.gcd(Math.abs(a), b);
+            a /= gcd;
+            b /= gcd;
         }
 
         this.a = a;

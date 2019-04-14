@@ -29,6 +29,15 @@ abstract class ScalarBase implements Scalar {
         return result;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Scalar)) {
+            return false;
+        }
+
+        return this.equals((Scalar)obj);
+    }
+
     public abstract Scalar clone();
     abstract Scalar getOne();
 }

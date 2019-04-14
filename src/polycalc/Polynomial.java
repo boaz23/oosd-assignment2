@@ -1,12 +1,20 @@
 package polycalc;
 
-import javafx.util.Pair;
+import polycalc.utils.ScalarUtils;
+
 import java.util.*;
 
 public class Polynomial {
+    // terms with a coefficient of zero are allowed in the list,
+    // however they don't have to.
+    // moreover, two poly terms of the same exponent must NOT
+    // be in the list.
+    // furthermore, the list must NOT be empty. that means
+    // that the constant 0 polynomial should be represent as
+    // a single term with a coefficient of zero
     private List<PolyTerm> terms;
 
-    public Polynomial(List<PolyTerm> terms) {
+    Polynomial(List<PolyTerm> terms) {
         if (terms == null) {
             throw new IllegalArgumentException("terms is null.");
         }
@@ -23,17 +31,10 @@ public class Polynomial {
         }
 
         PolynomialBuilder builder = new PolynomialBuilder();
-        this.addTerms(builder);
-        poly.addTerms(builder);
+        this.addPolyTerms(builder);
+        poly.addPolyTerms(builder);
 
         return builder.build();
-    }
-
-    private void addTerms(PolynomialBuilder builder) {
-        for (int i = 0; i < this.terms.size(); i++) {
-            PolyTerm polyTerm = this.terms.get(i);
-            builder.addPolyTerm(polyTerm);
-        }
     }
 
     public Polynomial mul(Polynomial poly) {
@@ -75,10 +76,7 @@ public class Polynomial {
         for (int i = 0; i < this.terms.size(); i++) {
             PolyTerm polyTerm = this.terms.get(i);
             PolyTerm derivatedPolyTerm = polyTerm.derivate();
-
-            if (!ScalarUtils.isZero(derivatedPolyTerm.getCoefficient())) {
-                resultPolyTerms.add(derivatedPolyTerm);
-            }
+            resultPolyTerms.add(derivatedPolyTerm);
         }
 
         return new Polynomial(resultPolyTerms);
@@ -86,25 +84,34 @@ public class Polynomial {
 
     @Override
     public String toString() {
+        // first sort so that we return a string in ascending exponent order
         this.terms.sort((a, b) -> Integer.compare(a.getExponent(), b.getExponent()));
 
         StringBuilder sb = new StringBuilder();
-
-        // append the first term
-        sb.append(this.terms.get(0).toString());
-
-        // append the rest
-        for (int i = 1; i < this.terms.size(); i++) {
+        for (int i = 0; i < this.terms.size(); i++) {
             PolyTerm polyTerm = this.terms.get(i);
-            String termString = polyTerm.toString();
-            if (termString.charAt(0) != '-') {
-                sb.append('+');
-            }
-
-            sb.append(polyTerm.toString());
+            sb.append(polyTerm);
         }
 
-        return sb.toString();
+        String s = sb.toString();
+
+        // since zeros are never added to the string
+        // and the polynomial is a constant zero,
+        // we need to manually change the return string
+        if (s.equals("")) {
+            s = "0";
+        }
+
+        return s;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Polynomial)) {
+            return false;
+        }
+
+        return this.equals((Polynomial)obj);
     }
 
     public boolean equals(Polynomial poly) {
@@ -113,30 +120,80 @@ public class Polynomial {
         }
 
         boolean result = true;
-        Map<Integer, PolyTerm> polyTermMap = new HashMap<>();
+        Map<Integer, PolyTerm> polyTermsMap = new HashMap<>();
+        this.addPolyTerms(polyTermsMap);
+
+        for (int i = 0; i < poly.terms.size() & result; i++) {
+            PolyTerm polyTerm = poly.terms.get(i);
+            int exponent = polyTerm.getExponent();
+
+            if (!polyTermsMap.containsKey(exponent)) {
+                // The exponent doesn't exist in our (this) list,
+                // that means the coefficient is zero
+                result = ScalarUtils.isZero(polyTerm.getCoefficient());
+            }
+            else {
+                // The exponent exists in our (this) list
+                // compare the two coefficients
+                PolyTerm otherPolyTerm = polyTermsMap.get(exponent);
+                if (!polyTerm.getCoefficient().equals(otherPolyTerm.getCoefficient())) {
+                    result = false;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private void addPolyTerms(PolynomialBuilder builder) {
+        for (int i = 0; i < this.terms.size(); i++) {
+            PolyTerm polyTerm = this.terms.get(i);
+            builder.addPolyTerm(polyTerm);
+        }
+    }
+
+    private void addPolyTerms(Map<Integer, PolyTerm> polyTermMap) {
         for (int i = 0; i < this.terms.size(); i++) {
             PolyTerm polyTerm = this.terms.get(i);
             int exponent = polyTerm.getExponent();
 
             polyTermMap.put(exponent, polyTerm);
         }
+    }
 
-        for (int i = 0; i < poly.terms.size(); i++) {
-            PolyTerm polyTerm = poly.terms.get(i);
-            int exponent = polyTerm.getExponent();
+    private static class StringBuilder {
+        private java.lang.StringBuilder sb;
+        private boolean first;
 
-            if (!polyTermMap.containsKey(exponent)) {
-                result = false;
-                break;
-            }
+        StringBuilder() {
+            this.sb = new java.lang.StringBuilder();
+            this.first = true;
+        }
 
-            PolyTerm otherPolyTerm = polyTermMap.get(exponent);
-            if (!polyTerm.getCoefficient().equals(otherPolyTerm.getCoefficient())) {
-                result = false;
-                break;
+        void append(PolyTerm polyTerm) {
+            if (!ScalarUtils.isZero(polyTerm.getCoefficient())) {
+                String polyTermString = polyTerm.toString();
+                if (first) {
+                    // If the first term is positive, it should not have
+                    // a '+' before it
+                    first = false;
+                }
+                else {
+                    // if the coefficient is negative, then '-' sign we'll be the
+                    // first character, otherwise, it is positive and we need to
+                    // add the '+' sign
+                    if (polyTermString.charAt(0) != '-') {
+                        sb.append('+');
+                    }
+                }
+
+                sb.append(polyTermString);
             }
         }
 
-        return result;
+        @Override
+        public String toString() {
+            return this.sb.toString();
+        }
     }
 }
