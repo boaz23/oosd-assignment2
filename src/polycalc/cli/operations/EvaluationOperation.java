@@ -10,11 +10,6 @@ import java.util.Scanner;
 
 public class EvaluationOperation implements PolynomialOperation {
     @Override
-    public String getName() {
-        return "Evaluation";
-    }
-
-    @Override
     public boolean shouldExit() {
         return false;
     }

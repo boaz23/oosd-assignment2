@@ -9,11 +9,6 @@ import java.util.Scanner;
 
 public class DerivateOperation implements PolynomialOperation {
     @Override
-    public String getName() {
-        return "Derivate";
-    }
-
-    @Override
     public boolean shouldExit() {
         return false;
     }

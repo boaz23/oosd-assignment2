@@ -7,7 +7,7 @@ import polycalc.logic.Polynomial;
 
 import java.util.Scanner;
 
-public abstract class PolynomialPairOperationBase<TResult> implements PolynomialOperation {
+public abstract class PairPolynomialOperationBase<TResult> implements PolynomialOperation {
     @Override
     public boolean shouldExit() {
         return false;
