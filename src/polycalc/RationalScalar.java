@@ -82,6 +82,26 @@ public class RationalScalar extends ScalarBase {
     }
 
     @Override
+    protected Scalar powCore(int exponent) {
+        Scalar result;
+        if (exponent == 0) {
+            result = One.clone();
+        }
+        else if (exponent == 1) {
+            result = this.clone();
+        }
+        else if (exponent % 2 == 0) {
+            Scalar tmp = this.powCore(exponent / 2);
+            result = tmp.mul(tmp);
+        }
+        else {
+            result = this.mul(this.powCore(exponent - 1));
+        }
+
+        return result;
+    }
+
+    @Override
     public Scalar neg() {
         return new RationalScalar(-this.getA(), this.getB());
     }
@@ -105,10 +125,5 @@ public class RationalScalar extends ScalarBase {
     public boolean equals(Scalar s) {
         RationalScalar other = (RationalScalar)s;
         return this.getA() * other.getB() == this.getB() * other.getA();
-    }
-
-    @Override
-    Scalar getOne() {
-        return One;
     }
 }
