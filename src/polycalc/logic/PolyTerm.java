@@ -1,4 +1,4 @@
-package polycalc;
+package polycalc.logic;
 
 public class PolyTerm {
     private Scalar coefficient;

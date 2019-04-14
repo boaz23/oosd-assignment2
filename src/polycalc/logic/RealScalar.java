@@ -1,4 +1,4 @@
-package polycalc;
+package polycalc.logic;
 
 import java.text.DecimalFormat;
 

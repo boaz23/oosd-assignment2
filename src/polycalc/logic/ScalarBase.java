@@ -1,4 +1,4 @@
-package polycalc;
+package polycalc.logic;
 
 abstract class ScalarBase implements Scalar {
     @Override

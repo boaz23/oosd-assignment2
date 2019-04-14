@@ -1,6 +1,6 @@
 package polycalc.utils;
 
-import polycalc.Scalar;
+import polycalc.logic.Scalar;
 
 public class ScalarUtils {
     public static boolean isZero(Scalar s) {

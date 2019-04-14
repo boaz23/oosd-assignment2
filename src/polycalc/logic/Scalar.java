@@ -1,4 +1,4 @@
-package polycalc;
+package polycalc.logic;
 
 public interface Scalar {
     Scalar add(Scalar s);
