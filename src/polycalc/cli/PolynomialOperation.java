@@ -1,5 +1,7 @@
 package polycalc.cli;
 
-public interface IPolynomialOperation {
-    void 
+public interface PolynomialOperation {
+    String getName();
+    boolean shouldExit();
+    void run(NumberField numberField);
 }

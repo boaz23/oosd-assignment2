@@ -1,4 +1,22 @@
 package polycalc.cli.operations;
 
-public class Exit {
+import polycalc.cli.NumberField;
+import polycalc.cli.PolynomialOperation;
+
+public class ExitOperation implements PolynomialOperation {
+
+    @Override
+    public String getName() {
+        return "Exit";
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return true;
+    }
+
+    @Override
+    public void run(NumberField numberField) {
+        throw new UnsupportedOperationException();
+    }
 }
