@@ -1,5 +1,7 @@
 package polycalc.logic;
 
+import polycalc.utils.ScalarUtils;
+
 public class PolyTerm {
     private Scalar coefficient;
     private int exponent;
@@ -90,9 +92,19 @@ public class PolyTerm {
 
     @Override
     public String toString() {
-        String s = this.getCoefficient().toString();
-        if (this.getExponent() > 0) {
-            s += "x^" + this.getExponent();
+        String s = "";
+
+        int exponent = this.getExponent();
+        Scalar coefficient = this.getCoefficient();
+        if (exponent == 0) {
+            s += coefficient.toString();
+        }
+        else {
+            if (!ScalarUtils.isOne(coefficient)) {
+                s += coefficient.toString();
+            }
+
+            s += "x^" + exponent;
         }
 
         return s;

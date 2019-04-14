@@ -10,4 +10,8 @@ public class ScalarUtils {
 
         return s.equals(s.mul(0));
     }
+
+    public static boolean isOne(Scalar s) {
+        return !isZero(s) & s.equals(s.mul(s));
+    }
 }
