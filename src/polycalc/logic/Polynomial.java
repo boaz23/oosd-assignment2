@@ -2,10 +2,7 @@ package polycalc.logic;
 
 import polycalc.utils.ScalarUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Polynomial {
     // Terms with a coefficient of zero are NOT allowed in the list.
@@ -44,7 +41,7 @@ public class Polynomial {
 
         // optimization
         if (this.terms.size() == 0 | poly.terms.size() == 0) {
-            result = new Polynomial(new ArrayList<>(0));
+            result = new Polynomial(new ArrayList<PolyTerm>(0));
         }
         else {
             PolynomialBuilder builder = new PolynomialBuilder();
@@ -102,7 +99,12 @@ public class Polynomial {
     @Override
     public String toString() {
         // first sort so that we return a string in ascending exponent order
-        this.terms.sort((a, b) -> Integer.compare(a.getExponent(), b.getExponent()));
+        Collections.sort(this.terms, new Comparator<PolyTerm>() {
+            @Override
+            public int compare(PolyTerm a, PolyTerm b) {
+                return Integer.compare(a.getExponent(), b.getExponent());
+            }
+        });
 
         StringBuilder sb = new StringBuilder();
         if (this.terms.size() > 0) {

@@ -15,11 +15,11 @@ public class Calculator {
 
     private Calculator() {
         this.operations = new HashMap<Integer, Pair<String, PolynomialOperation>>() {{
-            put(1, new Pair<>("Addition", new AdditionOperation()));
-            put(2, new Pair<>("Multiplication", new MultiplicationOperation()));
-            put(3, new Pair<>("Evaluation", new EvaluationOperation()));
-            put(4, new Pair<>("Derivate", new DerivateOperation()));
-            put(5, new Pair<>("Exit", new ExitOperation()));
+            put(1, new Pair<String, PolynomialOperation>("Addition", new AdditionOperation()));
+            put(2, new Pair<String, PolynomialOperation>("Multiplication", new MultiplicationOperation()));
+            put(3, new Pair<String, PolynomialOperation>("Evaluation", new EvaluationOperation()));
+            put(4, new Pair<String, PolynomialOperation>("Derivate", new DerivateOperation()));
+            put(5, new Pair<String, PolynomialOperation>("Exit", new ExitOperation()));
         }};
 
         this.numberFields = new HashMap<String, NumberField>() {{
