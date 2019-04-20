@@ -6,6 +6,11 @@ import polycalc.logic.Scalar;
 
 public class RealField implements NumberField {
     @Override
+    public String getPolynomialSplitRegex(String baseRegex) {
+        return baseRegex;
+    }
+
+    @Override
     public Scalar parseScalar(String s) {
         double coefficient = Double.parseDouble(s);
         return new RealScalar(coefficient);

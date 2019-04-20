@@ -35,7 +35,6 @@ public class Calculator {
         while (true) {
             for (Map.Entry<Integer, Pair<String, PolynomialOperation>> operationEntry : calculator.operations.entrySet()) {
                 Pair<String, PolynomialOperation> operationPair = operationEntry.getValue();
-                PolynomialOperation operation = operationPair.getValue();
                 System.out.println(operationEntry.getKey() + ". " + operationPair.getKey());
             }
 

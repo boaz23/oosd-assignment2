@@ -13,8 +13,9 @@ public class PolynomialParser {
     }
 
     public Polynomial parse(String input) {
+        String splitRegex = numberField.getPolynomialSplitRegex("((?=-)|[+])");
+        String[] inputPolyTerms = input.split(splitRegex);
         PolynomialBuilder builder = new PolynomialBuilder();
-        String[] inputPolyTerms = input.split("((?=[-])|[+])");
         for (int i = 0; i < inputPolyTerms.length; i++) {
             String inputPolyTerm = inputPolyTerms[i];
             String[] inputTermParts = inputPolyTerm.split("x\\^");

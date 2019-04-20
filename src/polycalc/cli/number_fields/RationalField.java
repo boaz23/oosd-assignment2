@@ -6,6 +6,11 @@ import polycalc.logic.Scalar;
 
 public class RationalField implements NumberField {
     @Override
+    public String getPolynomialSplitRegex(String baseRegex) {
+        return "(?!/-)" + baseRegex + "(?<!/)";
+    }
+
+    @Override
     public Scalar parseScalar(String s) {
         String[] parts = s.split("/");
         int numerator = Integer.parseInt(parts[0]);
