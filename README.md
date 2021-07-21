@@ -3,4 +3,4 @@ The crux of this assignment was supporting multiple kinds of number fields (e.g.
 and their different operation (e.g. addition, multiplication, etc.)
 while keeping the software modular using object oriented tools such as interfaces.
 
-For the assignments descriptions, refer to [this page](https://www.cs.bgu.ac.il/~oosd192/Assignments).
+[Course assignments descriptions](https://www.cs.bgu.ac.il/~oosd192/Assignments).
